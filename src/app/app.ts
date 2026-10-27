@@ -1,12 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Distraction } from './distraction/distraction';
+import { DistractionHolder } from './distraction-holder/distraction-holder';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [Distraction, DistractionHolder],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
-export class App {
-  protected readonly title = signal('angular-demo');
-}
+export class App {}
