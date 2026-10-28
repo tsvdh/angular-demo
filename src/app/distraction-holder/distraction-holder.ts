@@ -10,10 +10,17 @@ import { Distraction } from '../distraction/distraction';
 export class DistractionHolder {
   protected distractions = signal<Distraction[]>([]);
 
-  protected onButtonPress() {
+  protected onPlusButtonPress() {
     this.distractions.update((val) => {
       val.push(new Distraction());
       return val;
     });
+  }
+
+  protected onMinusButtonPress() {
+    this.distractions.update((val) => {
+      val.pop();
+      return val;
+    })
   }
 }

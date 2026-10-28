@@ -1,3 +1,10 @@
 button {
   font-size: 2rem;
 }
+
+div {
+  display: flex;
+  width: 5rem;
+  height: 2rem;
+  align-items: center;
+}
