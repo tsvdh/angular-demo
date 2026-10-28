@@ -10,35 +10,31 @@ export class Distraction {
 
   private colorList = ['red', 'green', 'blue', 'orange', 'purple', 'cyan', 'grey'];
   private curColorIndex = 0;
-  private changeColorFunction!: () => void;
-  private normalCooldown = 1000;
+  private normalCooldown = 2000;
   private fastCooldown = 200;
-  private taskId!: number;
+  private currentCooldown = this.normalCooldown;
 
-  protected isFast = signal(false)
-  protected color = signal('black')
+  protected isFast = signal(false);
+  protected color = signal('black');
 
   protected ngOnInit() {
     this.curColorIndex = Math.trunc(Math.random() * this.colorList.length);
 
-    this.changeColorFunction = () => {
+    const changeColorFunction = () => {
       this.color.set(this.colorList[this.curColorIndex])
       this.curColorIndex = (this.curColorIndex + 1) % this.colorList.length;
+      setTimeout(changeColorFunction, this.currentCooldown);
     }
-
-    this.changeColorFunction();
-    this.taskId = setInterval(this.changeColorFunction, this.normalCooldown);
+    setTimeout(changeColorFunction, this.currentCooldown);
   }
 
   protected onButtonPress() {
     this.isFast.set(true);
-    clearInterval(this.taskId);
-    this.taskId = setInterval(this.changeColorFunction, this.fastCooldown);
+    this.currentCooldown = this.fastCooldown;
 
     setTimeout(() => {
       this.isFast.set(false);
-      clearInterval(this.taskId);
-      this.taskId = setInterval(this.changeColorFunction, this.normalCooldown);
-    }, 2000)
+      this.currentCooldown = this.normalCooldown;
+    }, 5000)
   }
 }
